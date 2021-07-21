@@ -1,0 +1,72 @@
+﻿@model QuizApp.quiz
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>quiz</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.difficulty_level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.difficulty_level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.rating)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.rating)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.start_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.start_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.end_time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.end_time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.is_published)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.is_published)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,66 @@
+﻿@model QuizApp.question
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>question</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.question1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.question1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.isactive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.isactive)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.difficulty_level)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.difficulty_level)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.points)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.points)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.negative_points)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.negative_points)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.question_type.name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.question_type.name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

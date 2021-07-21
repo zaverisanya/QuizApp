@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="quiz_webappModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="options">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="choice_text" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="iscorrect" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="question" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="isactive" Type="bit" Nullable="false" />
+          <Property Name="difficulty_level" Type="smallint" Nullable="false" />
+          <Property Name="question_type_id" Type="int" Nullable="false" />
+          <Property Name="points" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+          <Property Name="negative_points" Type="decimal" Precision="5" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="question_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="quiz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="difficulty_level" Type="int" Nullable="false" />
+          <Property Name="rating" Type="int" Nullable="false" />
+          <Property Name="start_time" Type="datetime" Nullable="false" />
+          <Property Name="end_time" Type="datetime" Nullable="false" />
+          <Property Name="is_published" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="quiz_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="quiz_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="team_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="team_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="username" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="isactive" Type="bit" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="isadmin" Type="bit" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_options_question">
+          <End Role="question" Type="Self.question" Multiplicity="1" />
+          <End Role="options" Type="Self.options" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="options">
+              <PropertyRef Name="question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_question_question_type">
+          <End Role="question_type" Type="Self.question_type" Multiplicity="1" />
+          <End Role="question" Type="Self.question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="question">
+              <PropertyRef Name="question_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_users_quiz">
+          <End Role="quiz" Type="Self.quiz" Multiplicity="1" />
+          <End Role="quiz_users" Type="Self.quiz_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_users">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_users_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="quiz_users" Type="Self.quiz_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_users_team">
+          <End Role="team" Type="Self.team" Multiplicity="1" />
+          <End Role="team_users" Type="Self.team_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team_users">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_users_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="team_users" Type="Self.team_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="team_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="quiz_webappModelStoreContainer">
+          <EntitySet Name="options" EntityType="Self.options" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="question" EntityType="Self.question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="question_type" EntityType="Self.question_type" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quiz" EntityType="Self.quiz" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quiz_users" EntityType="Self.quiz_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="team" EntityType="Self.team" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="team_users" EntityType="Self.team_users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_options_question" Association="Self.FK_options_question">
+            <End Role="question" EntitySet="question" />
+            <End Role="options" EntitySet="options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_question_question_type" Association="Self.FK_question_question_type">
+            <End Role="question_type" EntitySet="question_type" />
+            <End Role="question" EntitySet="question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_users_quiz" Association="Self.FK_quiz_users_quiz">
+            <End Role="quiz" EntitySet="quiz" />
+            <End Role="quiz_users" EntitySet="quiz_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_users_users" Association="Self.FK_quiz_users_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="quiz_users" EntitySet="quiz_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_users_team" Association="Self.FK_team_users_team">
+            <End Role="team" EntitySet="team" />
+            <End Role="team_users" EntitySet="team_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_users_users" Association="Self.FK_team_users_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="team_users" EntitySet="team_users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="quiz_webappModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="quiz_webappEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="options" EntityType="quiz_webappModel.option" />
+          <EntitySet Name="questions" EntityType="quiz_webappModel.question" />
+          <EntitySet Name="question_type" EntityType="quiz_webappModel.question_type" />
+          <EntitySet Name="quizs" EntityType="quiz_webappModel.quiz" />
+          <EntitySet Name="quiz_users" EntityType="quiz_webappModel.quiz_users" />
+          <EntitySet Name="teams" EntityType="quiz_webappModel.team" />
+          <EntitySet Name="team_users" EntityType="quiz_webappModel.team_users" />
+          <EntitySet Name="users" EntityType="quiz_webappModel.user" />
+          <AssociationSet Name="FK_options_question" Association="quiz_webappModel.FK_options_question">
+            <End Role="question" EntitySet="questions" />
+            <End Role="option" EntitySet="options" />
+          </AssociationSet>
+          <AssociationSet Name="FK_question_question_type" Association="quiz_webappModel.FK_question_question_type">
+            <End Role="question_type" EntitySet="question_type" />
+            <End Role="question" EntitySet="questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_users_quiz" Association="quiz_webappModel.FK_quiz_users_quiz">
+            <End Role="quiz" EntitySet="quizs" />
+            <End Role="quiz_users" EntitySet="quiz_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_users_users" Association="quiz_webappModel.FK_quiz_users_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="quiz_users" EntitySet="quiz_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_users_team" Association="quiz_webappModel.FK_team_users_team">
+            <End Role="team" EntitySet="teams" />
+            <End Role="team_users" EntitySet="team_users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_team_users_users" Association="quiz_webappModel.FK_team_users_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="team_users" EntitySet="team_users" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="option">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="choice_text" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="iscorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="question" Relationship="quiz_webappModel.FK_options_question" FromRole="option" ToRole="question" />
+        </EntityType>
+        <EntityType Name="question">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="question1" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+          <Property Name="difficulty_level" Type="Int16" Nullable="false" />
+          <Property Name="question_type_id" Type="Int32" Nullable="false" />
+          <Property Name="points" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <Property Name="negative_points" Type="Decimal" Nullable="false" Precision="5" Scale="2" />
+          <NavigationProperty Name="options" Relationship="quiz_webappModel.FK_options_question" FromRole="question" ToRole="option" />
+          <NavigationProperty Name="question_type" Relationship="quiz_webappModel.FK_question_question_type" FromRole="question" ToRole="question_type" />
+        </EntityType>
+        <EntityType Name="question_type">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="questions" Relationship="quiz_webappModel.FK_question_question_type" FromRole="question_type" ToRole="question" />
+        </EntityType>
+        <EntityType Name="quiz">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="difficulty_level" Type="Int32" Nullable="false" />
+          <Property Name="rating" Type="Int32" Nullable="false" />
+          <Property Name="start_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="end_time" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="is_published" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="quiz_users" Relationship="quiz_webappModel.FK_quiz_users_quiz" FromRole="quiz" ToRole="quiz_users" />
+        </EntityType>
+        <EntityType Name="quiz_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="quiz_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="quiz" Relationship="quiz_webappModel.FK_quiz_users_quiz" FromRole="quiz_users" ToRole="quiz" />
+          <NavigationProperty Name="user" Relationship="quiz_webappModel.FK_quiz_users_users" FromRole="quiz_users" ToRole="user" />
+        </EntityType>
+        <EntityType Name="team">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="team_users" Relationship="quiz_webappModel.FK_team_users_team" FromRole="team" ToRole="team_users" />
+        </EntityType>
+        <EntityType Name="team_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="team_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="team" Relationship="quiz_webappModel.FK_team_users_team" FromRole="team_users" ToRole="team" />
+          <NavigationProperty Name="user" Relationship="quiz_webappModel.FK_team_users_users" FromRole="team_users" ToRole="user" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="username" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isactive" Type="Boolean" Nullable="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="isadmin" Type="Boolean" Nullable="false" />
+          <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="quiz_users" Relationship="quiz_webappModel.FK_quiz_users_users" FromRole="user" ToRole="quiz_users" />
+          <NavigationProperty Name="team_users" Relationship="quiz_webappModel.FK_team_users_users" FromRole="user" ToRole="team_users" />
+        </EntityType>
+        <Association Name="FK_options_question">
+          <End Type="quiz_webappModel.question" Role="question" Multiplicity="1" />
+          <End Type="quiz_webappModel.option" Role="option" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="option">
+              <PropertyRef Name="question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_question_question_type">
+          <End Type="quiz_webappModel.question_type" Role="question_type" Multiplicity="1" />
+          <End Type="quiz_webappModel.question" Role="question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question_type">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="question">
+              <PropertyRef Name="question_type_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_users_quiz">
+          <End Type="quiz_webappModel.quiz" Role="quiz" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_users" Role="quiz_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_users">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_users_users">
+          <End Type="quiz_webappModel.user" Role="user" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_users" Role="quiz_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_users_team">
+          <End Type="quiz_webappModel.team" Role="team" Multiplicity="1" />
+          <End Type="quiz_webappModel.team_users" Role="team_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="team">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="team_users">
+              <PropertyRef Name="team_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_team_users_users">
+          <End Type="quiz_webappModel.user" Role="user" Multiplicity="1" />
+          <End Type="quiz_webappModel.team_users" Role="team_users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="team_users">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="quiz_webappModelStoreContainer" CdmEntityContainer="quiz_webappEntities">
+          <EntitySetMapping Name="options">
+            <EntityTypeMapping TypeName="quiz_webappModel.option">
+              <MappingFragment StoreEntitySet="options">
+                <ScalarProperty Name="iscorrect" ColumnName="iscorrect" />
+                <ScalarProperty Name="choice_text" ColumnName="choice_text" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="questions">
+            <EntityTypeMapping TypeName="quiz_webappModel.question">
+              <MappingFragment StoreEntitySet="question">
+                <ScalarProperty Name="negative_points" ColumnName="negative_points" />
+                <ScalarProperty Name="points" ColumnName="points" />
+                <ScalarProperty Name="question_type_id" ColumnName="question_type_id" />
+                <ScalarProperty Name="difficulty_level" ColumnName="difficulty_level" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="question1" ColumnName="question" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="question_type">
+            <EntityTypeMapping TypeName="quiz_webappModel.question_type">
+              <MappingFragment StoreEntitySet="question_type">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quizs">
+            <EntityTypeMapping TypeName="quiz_webappModel.quiz">
+              <MappingFragment StoreEntitySet="quiz">
+                <ScalarProperty Name="is_published" ColumnName="is_published" />
+                <ScalarProperty Name="end_time" ColumnName="end_time" />
+                <ScalarProperty Name="start_time" ColumnName="start_time" />
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="difficulty_level" ColumnName="difficulty_level" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quiz_users">
+            <EntityTypeMapping TypeName="quiz_webappModel.quiz_users">
+              <MappingFragment StoreEntitySet="quiz_users">
+                <ScalarProperty Name="quiz_id" ColumnName="quiz_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teams">
+            <EntityTypeMapping TypeName="quiz_webappModel.team">
+              <MappingFragment StoreEntitySet="team">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="team_users">
+            <EntityTypeMapping TypeName="quiz_webappModel.team_users">
+              <MappingFragment StoreEntitySet="team_users">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="team_id" ColumnName="team_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="quiz_webappModel.user">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="isactive" ColumnName="isactive" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

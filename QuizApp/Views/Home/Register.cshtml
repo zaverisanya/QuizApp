@@ -1,0 +1,115 @@
+﻿@model QuizApp.Models.RegisterModel
+
+<style>
+    body {
+        color: #000;
+        overflow-x: hidden;
+        height: 100%;
+        /*background-image: url("https://i.imgur.com/GMmCQHC.png");*/
+        background-repeat: no-repeat;
+        background-size: 100% 100%
+    }
+
+    .card {
+        padding: 30px 40px;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        border: none !important;
+        box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2)
+    }
+
+    .blue-text {
+        color: #00BCD4
+    }
+
+    .form-control-label {
+        margin-bottom: 0
+    }
+
+    input,
+    textarea,
+    button {
+        padding: 8px 15px;
+        border-radius: 5px !important;
+        margin: 5px 0px;
+        box-sizing: border-box;
+        border: 1px solid #ccc;
+        font-size: 18px !important;
+        font-weight: 300
+    }
+
+        input:focus,
+        textarea:focus {
+            -moz-box-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            box-shadow: none !important;
+            border: 1px solid #00BCD4;
+            outline-width: 0;
+            font-weight: 400
+        }
+
+    .btn-block {
+        text-transform: uppercase;
+        font-size: 15px !important;
+        font-weight: 400;
+        height: 43px;
+        cursor: pointer
+    }
+
+        .btn-block:hover {
+            color: #fff !important
+        }
+
+    button:focus {
+        -moz-box-shadow: none !important;
+        -webkit-box-shadow: none !important;
+        box-shadow: none !important;
+        outline-width: 0
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="container-fluid px-1 py-5 mx-auto">
+        <div class="row d-flex justify-content-between">
+            <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
+                <h3>Register</h3>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <p class="blue-text">Please fill in your basic details to Register on this App. We promise not to spam you.</p>
+                <div class="card">
+
+                    
+                        <div class="row justify-content-end text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">User name<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } }) </div>
+
+                            <div class="form-group col-sm-6 flex-column d-flex">
+                                <label class="form-control-label px-3">Email<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="row justify-content-between text-left">
+                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } }) </div>
+                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Confirm Password<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } }) </div>
+                        </div>
+                        <div class="row justify-content-end">
+                            <div class="form-group col-sm-5"><input type="submit" value="Create" class="btn btn-default" /> </div>
+                        </div>
+                    
+                </div>
+            </div>
+            @*<div class="col-lg-4" style="background-color:skyblue;height:434px;margin-left:-13px;margin-top:130px;">
+                    Welcome
+                </div>*@
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

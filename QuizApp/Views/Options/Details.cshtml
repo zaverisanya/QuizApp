@@ -1,0 +1,42 @@
+﻿@model QuizApp.option
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>option</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.choice_text)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.choice_text)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.iscorrect)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.iscorrect)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.question.question1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.question.question1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

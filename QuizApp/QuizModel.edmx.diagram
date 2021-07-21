@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5c92c0d0cf424eb8bb1296cd6c67bd5d" Name="Diagram1">
+        <EntityTypeShape EntityType="quiz_webappModel.option" Width="1.5" PointX="10.25" PointY="2.625" />
+        <EntityTypeShape EntityType="quiz_webappModel.question" Width="1.5" PointX="8" PointY="2.25" />
+        <EntityTypeShape EntityType="quiz_webappModel.question_type" Width="1.5" PointX="5.75" PointY="2.875" />
+        <EntityTypeShape EntityType="quiz_webappModel.quiz" Width="1.5" PointX="0.75" PointY="7" />
+        <EntityTypeShape EntityType="quiz_webappModel.quiz_users" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="quiz_webappModel.team" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="quiz_webappModel.team_users" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="quiz_webappModel.user" Width="1.5" PointX="0.75" PointY="3.5" />
+        <AssociationConnector Association="quiz_webappModel.FK_options_question" />
+        <AssociationConnector Association="quiz_webappModel.FK_question_question_type" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_users_quiz" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_users_users" />
+        <AssociationConnector Association="quiz_webappModel.FK_team_users_team" />
+        <AssociationConnector Association="quiz_webappModel.FK_team_users_users" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
