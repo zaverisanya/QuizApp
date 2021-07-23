@@ -33,5 +33,6 @@ namespace QuizApp
         public virtual DbSet<team> teams { get; set; }
         public virtual DbSet<team_users> team_users { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<quiz_questions> quiz_questions { get; set; }
     }
 }

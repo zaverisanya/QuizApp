@@ -13,9 +13,11 @@ namespace QuizApp.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; }
-        [Required]
+        [Required] 
         public string Password { get; set; }
         [Required]
+        [Compare("Password")]
         public string ConfirmPassword { get; set; }
+        public string Error { get; set; }
     }
 }

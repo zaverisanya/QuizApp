@@ -1,0 +1,41 @@
+﻿@model QuizApp.Models.OrganizeQuizModel
+
+@{
+    ViewBag.Title = "Organize";
+}
+<style>
+
+    .hidden {
+        display:none;
+    }
+</style>
+<h2>Add Questions for Quiz: @Model.QuizName</h2>
+
+@using (Html.BeginForm())
+{
+    int index = 0;
+    @Html.AntiForgeryToken()
+
+    @Html.TextBoxFor(d => d.QuizID, "", new { @class = "hidden" })
+    <hr />
+    
+    <table class="table table-bordred table-striped">
+        @foreach (var question in Model.Questions)
+        {
+            
+        <tr>
+            <td>
+                @Html.CheckBoxFor(model=>model.Questions[index].IsSelected,new {  })
+                @Html.TextBoxFor(model=>model.Questions[index].QuestionID,new { @class="hidden" })
+            </td>
+            <td>
+                @question.Question
+            </td>
+        </tr>
+            index++;
+        }
+    </table>
+    <input type="submit" value="Save" class="btn btn-default btn-block btn-primary" />
+
+}
+

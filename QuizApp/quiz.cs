@@ -18,17 +18,19 @@ namespace QuizApp
         public quiz()
         {
             this.quiz_users = new HashSet<quiz_users>();
+            this.quiz_questions = new HashSet<quiz_questions>();
         }
     
         public int id { get; set; }
         public string name { get; set; }
         public int difficulty_level { get; set; }
-        public int rating { get; set; }
         public System.DateTime start_time { get; set; }
         public System.DateTime end_time { get; set; }
         public bool is_published { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<quiz_users> quiz_users { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quiz_questions> quiz_questions { get; set; }
     }
 }

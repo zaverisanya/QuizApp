@@ -18,6 +18,7 @@ namespace QuizApp
         public question()
         {
             this.options = new HashSet<option>();
+            this.quiz_questions = new HashSet<quiz_questions>();
         }
     
         public int id { get; set; }
@@ -31,5 +32,7 @@ namespace QuizApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<option> options { get; set; }
         public virtual question_type question_type { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quiz_questions> quiz_questions { get; set; }
     }
 }

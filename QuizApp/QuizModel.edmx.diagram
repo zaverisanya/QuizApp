@@ -19,6 +19,9 @@
         <AssociationConnector Association="quiz_webappModel.FK_quiz_users_users" />
         <AssociationConnector Association="quiz_webappModel.FK_team_users_team" />
         <AssociationConnector Association="quiz_webappModel.FK_team_users_users" />
+        <EntityTypeShape EntityType="quiz_webappModel.quiz_questions" Width="1.5" PointX="10.25" PointY="5.875" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_questions_question" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_questions_quiz" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -118,6 +118,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.abstractions.2.0.3\lib\net35\xunit.abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.4.1.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>..\packages\xunit.extensibility.core.2.4.1\lib\net452\xunit.core.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -145,11 +151,13 @@
     <Compile Include="Controllers\optionsController.cs" />
     <Compile Include="Controllers\questionsController.cs" />
     <Compile Include="Controllers\quizsController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OrganizeQuiz.cs" />
+    <Compile Include="Models\QuestionModel.cs" />
     <Compile Include="Models\RegisterModel.cs" />
     <Compile Include="option.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
@@ -178,6 +186,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QuizModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="quiz_questions.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
     <Compile Include="quiz_users.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
@@ -250,9 +261,6 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
-    <Content Include="Views\Quiz\Index.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
-    <Content Include="Views\Question\Index.cshtml" />
     <Content Include="Views\Options\Index.cshtml" />
     <Content Include="Views\questions\Create.cshtml" />
     <Content Include="Views\questions\Delete.cshtml" />
@@ -268,6 +276,13 @@
     <Content Include="Views\Options\Delete.cshtml" />
     <Content Include="Views\Options\Details.cshtml" />
     <Content Include="Views\Options\Edit.cshtml" />
+    <Content Include="Views\quizs\Organize.cshtml" />
+    <Content Include="Views\users\Create.cshtml" />
+    <Content Include="Views\users\Delete.cshtml" />
+    <Content Include="Views\users\Details.cshtml" />
+    <Content Include="Views\users\Edit.cshtml" />
+    <Content Include="Views\users\Index.cshtml" />
+    <Content Include="Views\Home\QuizMasterlogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -79,28 +79,42 @@
             <div class="col-xl-7 col-lg-8 col-md-9 col-11 text-center">
                 <h3>Register</h3>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                
                 <p class="blue-text">Please fill in your basic details to Register on this App. We promise not to spam you.</p>
                 <div class="card">
-
+                    <p >@Model.Error</p>
                     
-                        <div class="row justify-content-end text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">User name<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } }) </div>
 
-                            <div class="form-group col-sm-6 flex-column d-flex">
-                                <label class="form-control-label px-3">Email<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-
-                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-                            </div>
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">User name<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                         </div>
 
-                        <div class="row justify-content-between text-left">
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } }) </div>
-                            <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Confirm Password<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } }) </div>
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Email<span class="text-danger"> *</span></label> @Html.TextBoxFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                         </div>
-                        <div class="row justify-content-end">
-                            <div class="form-group col-sm-5"><input type="submit" value="Create" class="btn btn-default" /> </div>
+                    </div>
+
+                    <div class="row justify-content-between text-left">
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Password<span class="text-danger"> *</span></label> @Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                         </div>
-                    
+                        <div class="form-group col-sm-6 flex-column d-flex">
+                            <label class="form-control-label px-3">Confirm Password<span class="text-danger"> *</span></label> @Html.PasswordFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                            <br>
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="row justify-content-end">
+                        <div class="form-group col-sm-5"><input type="submit" value="Register" class="btn btn-default" /> </div>
+                    </div>
+
                 </div>
             </div>
             @*<div class="col-lg-4" style="background-color:skyblue;height:434px;margin-left:-13px;margin-top:130px;">
@@ -110,6 +124,4 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
