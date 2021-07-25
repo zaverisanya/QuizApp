@@ -4,11 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace QuizApp.Controllers
 {
     public class HomeController : Controller
     {
+        private quiz_webappEntities db = new quiz_webappEntities();
         public ActionResult Login()
         {
             LoginModel Model = new LoginModel();
@@ -17,6 +19,43 @@ namespace QuizApp.Controllers
         public ActionResult QuizMasterlogin()
         {
             return View();
+        }
+        public ActionResult UserLogin()
+        {
+            var quizzes = db.quizs.Where(d => (d.start_time <= DateTime.Now || d.start_time > DateTime.Now) && d.end_time>DateTime.Now && d.is_published==true).OrderBy(d => d.start_time).Take(3);
+            List<UserQuizModel> userquizzes = new List<UserQuizModel>();
+            var user_id = db.users.Where(d => d.email == Helper.Username).FirstOrDefault().user_id;
+            foreach(var quiz in quizzes)
+            {
+                UserQuizModel uq = new UserQuizModel();
+                uq.QuizID = quiz.id;
+                uq.QuizName = quiz.name;
+                uq.StartTime = quiz.start_time;
+                uq.EndTime = quiz.end_time;
+                uq.DifficultyLevel = quiz.difficulty_level;
+                uq.Participants = db.quiz_users.Where(d => d.quiz_id == quiz.id).Count();
+                uq.Participated = db.quiz_users.Where(d => d.quiz_id == quiz.id && d.user_id == user_id).Any();
+                userquizzes.Add(uq);
+            }
+
+            return View(userquizzes);
+        }
+
+        public ActionResult Participate(int id)
+        {
+            var qu = new quiz_users();
+            qu.user_id = db.users.Where(d => d.email == Helper.Username).FirstOrDefault().user_id;
+            qu.quiz_id = id;
+            var participate = db.quiz_users.Add(qu);
+            db.SaveChanges();
+            return RedirectToAction("../Home/UserLogin");
+        }
+        public ActionResult Logout()
+        {
+            
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public ActionResult Login(LoginModel model)
@@ -27,22 +66,25 @@ namespace QuizApp.Controllers
             bool IsAdmin = e.users.Any(d => d.email==model.Email && d.isadmin==true);
             if (user != null && user.Count() > 0)
             {
+                FormsAuthentication.SetAuthCookie(user.FirstOrDefault().email, false);
+                Helper.Username = user.FirstOrDefault().email;
                 if (IsAdmin == true)
                 {
+                    Helper.isAdmin = true;
                     return RedirectToAction("QuizMasterlogin");
                 }
                 else
                 {
-                    ViewBag.message = "Try again";
+                    return RedirectToAction("UserLogin");
                 }
                 
 
             }
             else
             {
-                ViewBag.message = "Incorrect username or password";
+                model.Error = "Incorrect username or password";
             }
-            return View("AfterLogin", model);
+            return View("Login", model);
         }
         public ActionResult Register()
         {
@@ -98,6 +140,14 @@ namespace QuizApp.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }

@@ -1,0 +1,38 @@
+﻿@model List<QuizApp.Models.UserQuizModel>
+@{
+    ViewBag.Title = "UserLogin";
+}
+
+<div class="jumbotron">
+    <h1>Welcome User @QuizApp.Controllers.Helper.Username</h1>
+    <p class="lead">Test your knowledge!!</p>
+
+</div>
+
+
+<h2>Upcoming Quizzes!</h2>
+
+<div class="row">
+    
+    @foreach (var quiz in Model)
+    {
+
+    <div class="col-md-4">
+        <h2>@quiz.QuizName</h2>
+        <p>Start Time: @quiz.StartTime.ToString("dd/MM/yyyy HH:mm tt")</p>
+        <p>End Time: @quiz.EndTime.ToString("dd/MM/yyyy HH:mm tt")</p>
+        <p>Difficulty Level: @quiz.DifficultyLevel.ToString()</p>
+        @if (quiz.Participated == false)
+        {
+            <p><a class="btn btn-default" href="/home/participate/@quiz.QuizID">Participate &raquo;</a></p>
+
+        }
+        else if ( DateTime.Now>=quiz.StartTime && quiz.EndTime > DateTime.Now)
+        {
+            <p><a class="btn btn-default" href="/quizattempt/attempt/@quiz.QuizID">Attempt &raquo;</a></p>
+
+        }
+        <p>Total participants: @quiz.Participants</p>
+    </div>
+    }
+</div>

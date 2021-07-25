@@ -22,6 +22,15 @@
         <EntityTypeShape EntityType="quiz_webappModel.quiz_questions" Width="1.5" PointX="10.25" PointY="5.875" />
         <AssociationConnector Association="quiz_webappModel.FK_quiz_questions_question" />
         <AssociationConnector Association="quiz_webappModel.FK_quiz_questions_quiz" />
+        <EntityTypeShape EntityType="quiz_webappModel.quiz_response" Width="1.5" PointX="12.5" PointY="4.75" />
+        <EntityTypeShape EntityType="quiz_webappModel.quiz_summary" Width="1.5" PointX="10.25" PointY="8.875" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_response_options" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_response_question" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_summary_question" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_response_quiz" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_summary_quiz" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_response_users" />
+        <AssociationConnector Association="quiz_webappModel.FK_quiz_summary_users" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

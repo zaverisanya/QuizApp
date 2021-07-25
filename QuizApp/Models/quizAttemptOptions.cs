@@ -5,14 +5,11 @@ using System.Web;
 
 namespace QuizApp.Models
 {
-    public class QuestionModel
+    public class quizAttemptOptions
     {
-        public string Question { get; set; }
+        public int OptionID { get; set; }
+        public string OptionText { get; set; }
         public bool IsSelected { get; set; }
 
-        public int QuestionID { get; set; }
-
-        public string Option { get; set; }
     }
-
 }

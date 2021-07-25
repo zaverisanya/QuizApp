@@ -22,14 +22,33 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Quiz app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                
             </div>
+
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    <li class = "navbar-brand">Quizeria</li>
+                    @if (String.IsNullOrEmpty(QuizApp.Controllers.Helper.Username))
+                    {
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                    }
+                    else if (QuizApp.Controllers.Helper.isAdmin == false)
+                    {
+                        <li>@Html.ActionLink("Home", "UserLogin", "Home")</li>
+                        <li>@Html.ActionLink("LeaderBoard", "LeaderBoard", "QuizAttempt")</li>
+                        <li> @Html.ActionLink("Logout", "Logout", "Home")</li>
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Home", "QuizMasterLogin", "Home")</li>
+
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+
+                    }
+
+
                 </ul>
             </div>
         </div>

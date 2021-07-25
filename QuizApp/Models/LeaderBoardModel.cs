@@ -5,13 +5,12 @@ using System.Web;
 
 namespace QuizApp.Models
 {
-    public class OrganizeQuizModel
+    public class LeaderBoardModel
     {
-
+        public int UserId { get; set; }
+        public string UserName { get; set; }
         public int QuizID { get; set; }
-
         public string QuizName { get; set; }
-        public List<QuestionModel> Questions { get; set; }
-       
-    }
+        public decimal PointsObtained { get; set; }
+    }   
 }

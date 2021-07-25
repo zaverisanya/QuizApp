@@ -12,21 +12,15 @@ namespace QuizApp
     using System;
     using System.Collections.Generic;
     
-    public partial class option
+    public partial class quiz_summary
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public option()
-        {
-            this.quiz_response = new HashSet<quiz_response>();
-        }
-    
         public int id { get; set; }
-        public int question_id { get; set; }
-        public string choice_text { get; set; }
-        public bool iscorrect { get; set; }
+        public int quiz_id { get; set; }
+        public int user_id { get; set; }
+        public int current_question_id { get; set; }
     
         public virtual question question { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<quiz_response> quiz_response { get; set; }
+        public virtual quiz quiz { get; set; }
+        public virtual user user { get; set; }
     }
 }

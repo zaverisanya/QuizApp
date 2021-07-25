@@ -14,35 +14,57 @@ namespace QuizApp.Controllers
     public class quizsController : Controller
     {
         private quiz_webappEntities db = new quiz_webappEntities();
+        public quizsController()
+        {
+            
+        }
 
         // GET: quizs
         public ActionResult Index()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login","Home");
+            }
             return View(db.quizs.ToList());
+
         }
 
         public ActionResult Organize(int id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+           
             var Questions = db.questions.Where(d => d.isactive == true).ToList();
+            
             var model = new OrganizeQuizModel();
             var Quiz = db.quizs.Where(d => d.id == id).FirstOrDefault();
+            
             var SelectedQuestions = db.quiz_questions.Where(d => d.quizid == id).Select(d=>d.questionid).ToList();
-            model.Questions = new List<QuestionModel>() ;
 
+            model.Questions = new List<QuestionModel>() ;
+            
             foreach(var question in Questions)
             {
                 var QuestionModel = new QuestionModel();
-
+                
                 if (SelectedQuestions.Contains(question.id))
                 {
                     QuestionModel.IsSelected = true;
+                   
                 }
                 else
                 {
                     QuestionModel.IsSelected = false;
+                    
                 }
+                
                 QuestionModel.Question = question.question1;
                 QuestionModel.QuestionID = question.id;
+                QuestionModel.Option = db.options.Where(d => d.question_id == question.id && d.iscorrect == true).Select(d => d.choice_text).FirstOrDefault();
+
                 model.Questions.Add(QuestionModel);
             }
             model.QuizID = id;
@@ -54,6 +76,10 @@ namespace QuizApp.Controllers
         [HttpPost]
         public ActionResult Organize(OrganizeQuizModel model)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var SelectedQuestions = model.Questions.Where(d => d.IsSelected == true).ToList();
             var existingQuestions = db.quiz_questions.Where(d => d.quizid == model.QuizID).ToList();
             
@@ -84,6 +110,10 @@ namespace QuizApp.Controllers
         }
         public ActionResult Publish(int id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var quiz = db.quizs.Where(d => d.id == id).FirstOrDefault();
             quiz.is_published = !quiz.is_published;
             db.SaveChanges();
@@ -92,6 +122,10 @@ namespace QuizApp.Controllers
         // GET: quizs/Details/5
         public ActionResult Details(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -107,6 +141,10 @@ namespace QuizApp.Controllers
         // GET: quizs/Create
         public ActionResult Create()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -117,6 +155,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,name,difficulty_level,rating,start_time,end_time")] quiz quiz)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.quizs.Add(quiz);
@@ -130,6 +172,10 @@ namespace QuizApp.Controllers
         // GET: quizs/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -149,6 +195,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,name,difficulty_level,rating,start_time,end_time")] quiz quiz)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(quiz).State = EntityState.Modified;
@@ -161,6 +211,10 @@ namespace QuizApp.Controllers
         // GET: quizs/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -174,15 +228,7 @@ namespace QuizApp.Controllers
         }
 
         // POST: quizs/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            quiz quiz = db.quizs.Find(id);
-            db.quizs.Remove(quiz);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        
 
         protected override void Dispose(bool disposing)
         {

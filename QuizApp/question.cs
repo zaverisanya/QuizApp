@@ -19,6 +19,8 @@ namespace QuizApp
         {
             this.options = new HashSet<option>();
             this.quiz_questions = new HashSet<quiz_questions>();
+            this.quiz_response = new HashSet<quiz_response>();
+            this.quiz_summary = new HashSet<quiz_summary>();
         }
     
         public int id { get; set; }
@@ -34,5 +36,9 @@ namespace QuizApp
         public virtual question_type question_type { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<quiz_questions> quiz_questions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quiz_response> quiz_response { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<quiz_summary> quiz_summary { get; set; }
     }
 }

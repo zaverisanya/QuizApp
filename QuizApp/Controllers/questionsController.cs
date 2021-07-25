@@ -17,6 +17,10 @@ namespace QuizApp.Controllers
         // GET: questions
         public ActionResult Index()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             var questions = db.questions.Include(q => q.question_type);
             return View(questions.Where(d => d.isactive == true).ToList());
         }
@@ -24,6 +28,10 @@ namespace QuizApp.Controllers
         // GET: questions/Details/5
         public ActionResult Details(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,6 +47,10 @@ namespace QuizApp.Controllers
         // GET: questions/Create
         public ActionResult Create()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             ViewBag.question_type_id = new SelectList(db.question_type, "id", "name");
             return View();
         }
@@ -50,11 +62,15 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "id,question1,isactive,difficulty_level,question_type_id,points,negative_points")] question question)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.questions.Add(question);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("../Options/Create");
             }
 
             ViewBag.question_type_id = new SelectList(db.question_type, "id", "name", question.question_type_id);
@@ -64,6 +80,10 @@ namespace QuizApp.Controllers
         // GET: questions/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -84,6 +104,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "id,question1,isactive,difficulty_level,question_type_id,points,negative_points")] question question)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(question).State = EntityState.Modified;
@@ -97,6 +121,10 @@ namespace QuizApp.Controllers
         // GET: questions/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -114,6 +142,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             question question = db.questions.Find(id);
             question.isactive = false;
             db.Entry(question).State = EntityState.Modified;

@@ -18,12 +18,20 @@ namespace QuizApp.Controllers
         // GET: users
         public ActionResult Index()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View(db.users.ToList());
         }
 
         // GET: users/Details/5
         public ActionResult Details(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -39,6 +47,10 @@ namespace QuizApp.Controllers
         // GET: users/Create
         public ActionResult Create()
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             return View();
         }
 
@@ -50,6 +62,10 @@ namespace QuizApp.Controllers
         
         public ActionResult Create([Bind(Include = "user_id,username,isactive,email,isadmin,password")] user user)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.users.Add(user);
@@ -63,6 +79,10 @@ namespace QuizApp.Controllers
         // GET: users/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -82,6 +102,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "user_id,username,isactive,email,isadmin,password")] user user)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
@@ -94,6 +118,10 @@ namespace QuizApp.Controllers
         // GET: users/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -111,6 +139,10 @@ namespace QuizApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            if (Helper.isAdmin == false)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             user user = db.users.Find(id);
             db.users.Remove(user);
             db.SaveChanges();

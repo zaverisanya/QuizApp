@@ -20,6 +20,20 @@
     <hr />
     
     <table class="table table-bordred table-striped">
+        <thead>
+            <tr>
+                <th>
+
+                </th>
+                <th>
+                    Questions
+                </th>
+                <th>
+                    Answers
+                </th>
+            </tr>
+            
+        </thead>
         @foreach (var question in Model.Questions)
         {
             
@@ -30,6 +44,9 @@
             </td>
             <td>
                 @question.Question
+            </td>
+            <td>
+                @question.Option
             </td>
         </tr>
             index++;

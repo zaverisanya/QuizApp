@@ -4,7 +4,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Add Quiz</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -53,7 +53,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.id }) |
+               
                 @Html.ActionLink("Organize", "Organize", new { id = item.id }) |
                 
                 @Html.ActionLink(item.is_published==true?"Unpublish":"Publish", "Publish", new { id = item.id })

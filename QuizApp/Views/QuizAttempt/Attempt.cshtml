@@ -1,0 +1,52 @@
+﻿@model QuizApp.Models.quizAttemptModel
+@{
+    ViewBag.Title = "View";
+}
+<style>
+    .hidden{
+        display:"none";
+    }
+</style>
+<script>
+    function submitForm(t) {
+        if ($("input[name='CorrectAnswerMarked']:checked").length <= 0) {
+            alert("Please select an option to submit your answer.");
+            return false;
+        }
+        $("form").submit();
+    }
+    function updateSelected(selected) {
+        $("#SelectedOptionID").val(selected);
+    }
+</script>
+@using (Html.BeginForm())
+
+{
+    @Html.TextBoxFor(d => d.Question.id,new {@class="hidden" })
+    @Html.TextBoxFor(d => d.SelectedOptionID, new { @class = "hidden" })
+    @Html.TextBoxFor(d => d.QuizID, new { @class = "hidden" })
+    @Html.AntiForgeryToken()
+
+    <div class="card">
+        <div class="card-header text-white">
+            <!--#14799e;-->
+            <h3>
+                @Model.Question.question1
+            </h3>
+        </div>
+        <div class="card-body">
+            <ul class="list-group list-group-flush">
+
+                @foreach (var opts in Model.Options)
+                {
+                    @Html.Raw("<li class='list-group-item list-inline'><input type='radio' onclick='javascript:updateSelected(" + opts.OptionID + ")' name='CorrectAnswerMarked' value='" + opts.OptionID + "' class='cb' id='" + @opts.OptionID + "'><span class='option-text'>" + opts.OptionText.Trim() + "</span></li>");
+                }
+
+            </ul>
+        </div>
+
+        <div class="card-footer">
+            <button type="button" id="Accept" class="btn btn-primary btn-lg" onclick="javascript: return submitForm(this)">Accept Answer</button>
+        </div>
+    </div>
+}

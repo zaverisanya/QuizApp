@@ -52,6 +52,25 @@
           <Property Name="quizid" Type="int" />
           <Property Name="questionid" Type="int" />
         </EntityType>
+        <EntityType Name="quiz_response">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="quiz_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="question_id" Type="int" Nullable="false" />
+          <Property Name="option_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="quiz_summary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="quiz_id" Type="int" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="current_question_id" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="quiz_users">
           <Key>
             <PropertyRef Name="id" />
@@ -134,6 +153,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_quiz_response_options">
+          <End Role="options" Type="Self.options" Multiplicity="1" />
+          <End Role="quiz_response" Type="Self.quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="options">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="option_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_question">
+          <End Role="question" Type="Self.question" Multiplicity="1" />
+          <End Role="quiz_response" Type="Self.quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_quiz">
+          <End Role="quiz" Type="Self.quiz" Multiplicity="1" />
+          <End Role="quiz_response" Type="Self.quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="quiz_response" Type="Self.quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_question">
+          <End Role="question" Type="Self.question" Multiplicity="1" />
+          <End Role="quiz_summary" Type="Self.quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="current_question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_quiz">
+          <End Role="quiz" Type="Self.quiz" Multiplicity="1" />
+          <End Role="quiz_summary" Type="Self.quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_users">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="quiz_summary" Type="Self.quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_quiz_users_quiz">
           <End Role="quiz" Type="Self.quiz" Multiplicity="1" />
           <End Role="quiz_users" Type="Self.quiz_users" Multiplicity="*" />
@@ -188,6 +291,8 @@
           <EntitySet Name="question_type" EntityType="Self.question_type" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="quiz" EntityType="Self.quiz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="quiz_questions" EntityType="Self.quiz_questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quiz_response" EntityType="Self.quiz_response" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="quiz_summary" EntityType="Self.quiz_summary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="quiz_users" EntityType="Self.quiz_users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="team" EntityType="Self.team" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="team_users" EntityType="Self.team_users" Schema="dbo" store:Type="Tables" />
@@ -207,6 +312,34 @@
           <AssociationSet Name="FK_quiz_questions_quiz" Association="Self.FK_quiz_questions_quiz">
             <End Role="quiz" EntitySet="quiz" />
             <End Role="quiz_questions" EntitySet="quiz_questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_options" Association="Self.FK_quiz_response_options">
+            <End Role="options" EntitySet="options" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_question" Association="Self.FK_quiz_response_question">
+            <End Role="question" EntitySet="question" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_quiz" Association="Self.FK_quiz_response_quiz">
+            <End Role="quiz" EntitySet="quiz" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_users" Association="Self.FK_quiz_response_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_question" Association="Self.FK_quiz_summary_question">
+            <End Role="question" EntitySet="question" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_quiz" Association="Self.FK_quiz_summary_quiz">
+            <End Role="quiz" EntitySet="quiz" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_users" Association="Self.FK_quiz_summary_users">
+            <End Role="users" EntitySet="users" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
           </AssociationSet>
           <AssociationSet Name="FK_quiz_users_quiz" Association="Self.FK_quiz_users_quiz">
             <End Role="quiz" EntitySet="quiz" />
@@ -271,6 +404,36 @@
             <End Role="quiz" EntitySet="quizs" />
             <End Role="quiz_questions" EntitySet="quiz_questions" />
           </AssociationSet>
+          <EntitySet Name="quiz_response" EntityType="quiz_webappModel.quiz_response" />
+          <EntitySet Name="quiz_summary" EntityType="quiz_webappModel.quiz_summary" />
+          <AssociationSet Name="FK_quiz_response_options" Association="quiz_webappModel.FK_quiz_response_options">
+            <End Role="option" EntitySet="options" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_question" Association="quiz_webappModel.FK_quiz_response_question">
+            <End Role="question" EntitySet="questions" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_question" Association="quiz_webappModel.FK_quiz_summary_question">
+            <End Role="question" EntitySet="questions" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_quiz" Association="quiz_webappModel.FK_quiz_response_quiz">
+            <End Role="quiz" EntitySet="quizs" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_quiz" Association="quiz_webappModel.FK_quiz_summary_quiz">
+            <End Role="quiz" EntitySet="quizs" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_response_users" Association="quiz_webappModel.FK_quiz_response_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="quiz_response" EntitySet="quiz_response" />
+          </AssociationSet>
+          <AssociationSet Name="FK_quiz_summary_users" Association="quiz_webappModel.FK_quiz_summary_users">
+            <End Role="user" EntitySet="users" />
+            <End Role="quiz_summary" EntitySet="quiz_summary" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="option">
           <Key>
@@ -281,6 +444,7 @@
           <Property Name="choice_text" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="iscorrect" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="question" Relationship="quiz_webappModel.FK_options_question" FromRole="option" ToRole="question" />
+          <NavigationProperty Name="quiz_response" Relationship="quiz_webappModel.FK_quiz_response_options" FromRole="option" ToRole="quiz_response" />
         </EntityType>
         <EntityType Name="question">
           <Key>
@@ -296,6 +460,8 @@
           <NavigationProperty Name="options" Relationship="quiz_webappModel.FK_options_question" FromRole="question" ToRole="option" />
           <NavigationProperty Name="question_type" Relationship="quiz_webappModel.FK_question_question_type" FromRole="question" ToRole="question_type" />
           <NavigationProperty Name="quiz_questions" Relationship="quiz_webappModel.FK_quiz_questions_question" FromRole="question" ToRole="quiz_questions" />
+          <NavigationProperty Name="quiz_response" Relationship="quiz_webappModel.FK_quiz_response_question" FromRole="question" ToRole="quiz_response" />
+          <NavigationProperty Name="quiz_summary" Relationship="quiz_webappModel.FK_quiz_summary_question" FromRole="question" ToRole="quiz_summary" />
         </EntityType>
         <EntityType Name="question_type">
           <Key>
@@ -317,6 +483,8 @@
           <Property Name="is_published" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="quiz_users" Relationship="quiz_webappModel.FK_quiz_users_quiz" FromRole="quiz" ToRole="quiz_users" />
           <NavigationProperty Name="quiz_questions" Relationship="quiz_webappModel.FK_quiz_questions_quiz" FromRole="quiz" ToRole="quiz_questions" />
+          <NavigationProperty Name="quiz_response" Relationship="quiz_webappModel.FK_quiz_response_quiz" FromRole="quiz" ToRole="quiz_response" />
+          <NavigationProperty Name="quiz_summary" Relationship="quiz_webappModel.FK_quiz_summary_quiz" FromRole="quiz" ToRole="quiz_summary" />
         </EntityType>
         <EntityType Name="quiz_users">
           <Key>
@@ -358,6 +526,8 @@
           <Property Name="password" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="quiz_users" Relationship="quiz_webappModel.FK_quiz_users_users" FromRole="user" ToRole="quiz_users" />
           <NavigationProperty Name="team_users" Relationship="quiz_webappModel.FK_team_users_users" FromRole="user" ToRole="team_users" />
+          <NavigationProperty Name="quiz_response" Relationship="quiz_webappModel.FK_quiz_response_users" FromRole="user" ToRole="quiz_response" />
+          <NavigationProperty Name="quiz_summary" Relationship="quiz_webappModel.FK_quiz_summary_users" FromRole="user" ToRole="quiz_summary" />
         </EntityType>
         <Association Name="FK_options_question">
           <End Type="quiz_webappModel.question" Role="question" Multiplicity="1" />
@@ -465,6 +635,116 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="quiz_response">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="quiz_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="question_id" Type="Int32" Nullable="false" />
+          <Property Name="option_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="option" Relationship="quiz_webappModel.FK_quiz_response_options" FromRole="quiz_response" ToRole="option" />
+          <NavigationProperty Name="question" Relationship="quiz_webappModel.FK_quiz_response_question" FromRole="quiz_response" ToRole="question" />
+          <NavigationProperty Name="quiz" Relationship="quiz_webappModel.FK_quiz_response_quiz" FromRole="quiz_response" ToRole="quiz" />
+          <NavigationProperty Name="user" Relationship="quiz_webappModel.FK_quiz_response_users" FromRole="quiz_response" ToRole="user" />
+        </EntityType>
+        <EntityType Name="quiz_summary">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="quiz_id" Type="Int32" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="current_question_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="question" Relationship="quiz_webappModel.FK_quiz_summary_question" FromRole="quiz_summary" ToRole="question" />
+          <NavigationProperty Name="quiz" Relationship="quiz_webappModel.FK_quiz_summary_quiz" FromRole="quiz_summary" ToRole="quiz" />
+          <NavigationProperty Name="user" Relationship="quiz_webappModel.FK_quiz_summary_users" FromRole="quiz_summary" ToRole="user" />
+        </EntityType>
+        <Association Name="FK_quiz_response_options">
+          <End Type="quiz_webappModel.option" Role="option" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_response" Role="quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="option">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="option_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_question">
+          <End Type="quiz_webappModel.question" Role="question" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_response" Role="quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_question">
+          <End Type="quiz_webappModel.question" Role="question" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_summary" Role="quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="question">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="current_question_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_quiz">
+          <End Type="quiz_webappModel.quiz" Role="quiz" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_response" Role="quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_quiz">
+          <End Type="quiz_webappModel.quiz" Role="quiz" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_summary" Role="quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="quiz">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="quiz_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_response_users">
+          <End Type="quiz_webappModel.user" Role="user" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_response" Role="quiz_response" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_response">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_quiz_summary_users">
+          <End Type="quiz_webappModel.user" Role="user" Multiplicity="1" />
+          <End Type="quiz_webappModel.quiz_summary" Role="quiz_summary" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user">
+              <PropertyRef Name="user_id" />
+            </Principal>
+            <Dependent Role="quiz_summary">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -557,6 +837,27 @@
               <MappingFragment StoreEntitySet="quiz_questions">
                 <ScalarProperty Name="questionid" ColumnName="questionid" />
                 <ScalarProperty Name="quizid" ColumnName="quizid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quiz_response">
+            <EntityTypeMapping TypeName="quiz_webappModel.quiz_response">
+              <MappingFragment StoreEntitySet="quiz_response">
+                <ScalarProperty Name="option_id" ColumnName="option_id" />
+                <ScalarProperty Name="question_id" ColumnName="question_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="quiz_id" ColumnName="quiz_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="quiz_summary">
+            <EntityTypeMapping TypeName="quiz_webappModel.quiz_summary">
+              <MappingFragment StoreEntitySet="quiz_summary">
+                <ScalarProperty Name="current_question_id" ColumnName="current_question_id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="quiz_id" ColumnName="quiz_id" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -147,18 +147,24 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\Helper.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\optionsController.cs" />
     <Compile Include="Controllers\questionsController.cs" />
+    <Compile Include="Controllers\QuizAttemptController.cs" />
     <Compile Include="Controllers\quizsController.cs" />
     <Compile Include="Controllers\usersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LeaderBoardModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OrganizeQuiz.cs" />
     <Compile Include="Models\QuestionModel.cs" />
+    <Compile Include="Models\quizAttemptModel.cs" />
+    <Compile Include="Models\quizAttemptOptions.cs" />
     <Compile Include="Models\RegisterModel.cs" />
+    <Compile Include="Models\UserQuizModel.cs" />
     <Compile Include="option.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
@@ -188,6 +194,12 @@
       <DependentUpon>QuizModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="quiz_questions.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="quiz_response.cs">
+      <DependentUpon>QuizModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="quiz_summary.cs">
       <DependentUpon>QuizModel.tt</DependentUpon>
     </Compile>
     <Compile Include="quiz_users.cs">
@@ -259,7 +271,6 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\AfterLogin.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Options\Index.cshtml" />
     <Content Include="Views\questions\Create.cshtml" />
@@ -283,6 +294,11 @@
     <Content Include="Views\users\Edit.cshtml" />
     <Content Include="Views\users\Index.cshtml" />
     <Content Include="Views\Home\QuizMasterlogin.cshtml" />
+    <Content Include="Views\Home\UserLogin.cshtml" />
+    <Content Include="Views\QuizAttempt\Attempt.cshtml" />
+    <Content Include="Views\QuizAttempt\ThankYou.cshtml" />
+    <Content Include="Views\QuizAttempt\LeaderBoard.cshtml" />
+    <Content Include="Views\QuizAttempt\Nil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
