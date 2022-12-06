@@ -14,3 +14,7 @@ Quiz Application for Competition
 11) Press build and run.
 12) To see the Quizmaster view login as email: admin@gmail.com, password: password.
 13) To see the User view login as email: user@gmail.com, password: user.
+
+Here is the of the webapp:
+
+[QuizWebapp_SanyaZaveri_QWA01.pdf](https://github.com/zaverisanya/QuizApp/files/10168210/QuizWebapp_SanyaZaveri_QWA01.pdf)
